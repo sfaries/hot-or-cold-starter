@@ -2,7 +2,7 @@
 $(document).ready(function(){
 
 	var $guess = $("#userGuess");
-
+	var rightNum = undefined;
 
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
@@ -17,32 +17,36 @@ $(document).ready(function(){
 
   	/*--- Start New Game ---*/
   	$(".new").on("click", function(){
-  		console.log("new game button works!");
+  		console.log("button works");
   		newGame();
   	});
 
   	/*--- Guess Button ---*/
   	$("#guessButton").on("click",function(){
-		if ( $guess.val() > 100){
+  		var guess = $guess.val();
+
+		if ( guess > 100){
 			alert("Choose a number less than 100");
 		}
-		else if ( $guess.val() < 1){
+		else if ( guess < 1){
 			alert("Choose a number greater than 1");
 		}
 		else {
-			$guess.val();
+			
 			//append guess list
 			//add guess to guess counter
 			//invoke userFeedback
+
+		
+		userFeedback(guess);
 		}
-		userFeedback();
   	});
 
   	/*--- New Game Function ---*/
 
   	function newGame(){
-  		//reset guess counter
-  		//reset list append
+  		//reset guess counter (2 options: replace value; save a var newGuesses with a count ++)
+  		//reset list append (remove or empty if there is a container)
   		//Default feedback space (Make your guess)
   		ranNumber();
   	};
@@ -51,40 +55,42 @@ $(document).ready(function(){
 
   	function ranNumber(){
 
-  		var x = Math.floor((Math.random() * 100) + 1);
-  		return x
-  		//invoked by new game
+  		var x = Math.floor((Math.random() * 101) + 1);
+  		console.log(x);
+  		return x;
   	};
 
   	/*--- User Feedback Function ---*/
 
-  	function userFeedback(){
+  	function userFeedback(guess){
+  			//drop guess pass through?
+  			//swapped ranNumber(); with rightNum;
+  			//var guess = $guess.val(); 
+  		var rightNum = ranNumber();
 
-  		var y = ranNumber();
-
-  		if ($guess.val() === y ){
+  		//swapped $guess.val() with guess which should be passed through
+  		if (guess === rightNum ){
   			alert("You Got It!");
   			//start a new game?
   		}
-  		else if ($guess.val()  === ranNumber() ){
-  			alert("");
+  		else if (guess - rightNum <= Math.abs(10) ){
+  			alert("Very Hot!");
   		}
-  		else if ($guess.val() === ranNumber() ){
-  			alert("");
+  		else if (guess - rightNum <= Math.abs(25) ){
+  			alert("Warm");
   		}
-  		else if ($guess.val() === ranNumber() ){
-  			alert("");
+  		else if (guess - rightNum <= Math.abs(35) ){
+  			alert("Cold");
   		}
-  		else if ($guess.val() === ranNumber() ){
-  			alert("");
+  		else if (guess - rightNum <= Math.abs(45) ){
+  			alert("Very Cold");
   		}
   		else {
-  			alert("far away!");
+  			alert("Ice Cold!");
   		}
-  		//else if conditional
   		//appears in div#feedback changin the html
   		//if correct guess, option to start a new game
 
   	};
- ranNumber(); 	
+//newGame(); 	
 });
