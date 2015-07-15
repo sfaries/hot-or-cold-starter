@@ -1,57 +1,43 @@
 
 $(document).ready(function(){
 
-	var $guess = $("#userGuess");
-	var rightNum = undefined;
+  var gameNum = undefined;
+
 
 	/*--- Display information modal box ---*/
   	$(".what").click(function(){
     	$(".overlay").fadeIn(1000);
-
   	});
 
-  	/*--- Hide information modal box ---*/
+
+  /*--- Hide information modal box ---*/
   	$("a.close").click(function(){
   		$(".overlay").fadeOut(1000);
   	});
 
-  	/*--- Start New Game ---*/
-  	$(".new").on("click", function(){
-  		console.log("button works");
-  		newGame();
-  	});
 
-  	/*--- Guess Button ---*/
-  	$("#guessButton").on("click",function(){
-  		var guess = $guess.val();
+  /*--- Start New Game ---*/
+  	$(".new").on("click", newGame);
 
-		if ( guess > 100){
-			alert("Choose a number less than 100");
-		}
-		else if ( guess < 1){
-			alert("Choose a number greater than 1");
-		}
-		else {
-			
-			//append guess list
-			//add guess to guess counter
-			//invoke userFeedback
 
-		
-		userFeedback(guess);
-		}
-  	});
+  /*--- Guess Button ---*/
+  	$(".button").on("click", userFeedback);
 
-  	/*--- New Game Function ---*/
+
+  /*--- New Game Function ---*/
 
   	function newGame(){
-  		//reset guess counter (2 options: replace value; save a var newGuesses with a count ++)
-  		//reset list append (remove or empty if there is a container)
-  		//Default feedback space (Make your guess)
-  		ranNumber();
+      $("#count").html("0");
+  		//$("#count").show();?reset guess counter (2 options: replace value; save a var newGuesses with a count ++)
+      $("#feedback").html("Make your Guess!");
+  		$("#guessList").empty();
+  		gameNum = ranNumber();
+      console.log(gameNum);
+      return gameNum;
   	};
 
-  	/*--- Random Number Function ---*/
+
+  /*--- Random Number Function ---*/
 
   	function ranNumber(){
 
@@ -60,37 +46,92 @@ $(document).ready(function(){
   		return x;
   	};
 
-  	/*--- User Feedback Function ---*/
 
-  	function userFeedback(guess){
-  			//drop guess pass through?
-  			//swapped ranNumber(); with rightNum;
-  			//var guess = $guess.val(); 
-  		var rightNum = ranNumber();
+  /*--- User Feedback Function ---*/
 
-  		//swapped $guess.val() with guess which should be passed through
-  		if (guess === rightNum ){
-  			alert("You Got It!");
-  			//start a new game?
-  		}
-  		else if (guess - rightNum <= Math.abs(10) ){
-  			alert("Very Hot!");
-  		}
-  		else if (guess - rightNum <= Math.abs(25) ){
-  			alert("Warm");
-  		}
-  		else if (guess - rightNum <= Math.abs(35) ){
-  			alert("Cold");
-  		}
-  		else if (guess - rightNum <= Math.abs(45) ){
-  			alert("Very Cold");
-  		}
-  		else {
-  			alert("Ice Cold!");
-  		}
-  		//appears in div#feedback changin the html
-  		//if correct guess, option to start a new game
+  	function userFeedback(){
+       var $guess = $("#userGuess").val();
+       var guess = $guess;
+        $("#userGuess").val('');
+       
+        Number(guess);
+        //console.log(guess);
+        //console.log(gameNum);
 
-  	};
-//newGame(); 	
+          //$("#count")add guess to guess counter
+         $("ul.guessBox").append('<li class = "guessBox">' + guess + '</li>');
+
+
+        if ( guess > 100){
+          $("#feedback").html("Choose a number less than 100");
+
+        }
+        else if ( guess < 1){
+          $("#feedback").html("Choose a number greater than 1");
+
+        }
+        else if (guess == gameNum){ 
+          $("#feedback").html("You Got It!");
+        }
+        else if ( Math.abs(guess - gameNum) <= 10){ 
+          console.log("Very Hot!");
+          $("#feedback").html("Very Hot!");
+        }
+        else if ( Math.abs(guess - gameNum) <= 25){ 
+          console.log("Warm");
+          $("#feedback").html("Warm");
+
+        }
+        else if ( Math.abs(guess - gameNum) <= 35){ 
+          console.log("Cold");
+          $("#feedback").html("Cold");
+
+        }  
+        else if ( Math.abs(guess - gameNum) <= 45){ 
+          console.log("Very Cold");
+          $("#feedback").html("Very Cold");
+
+        } 
+        else {
+          console.log("Ice Cold!");
+          $("#feedback").html("Ice Cold!");
+
+        }
+    };
 });
+
+/*
+$(".button").on("click", function(){
+    var i = 0;
+    $("#count").html(i++);
+};
+*/
+
+  /* count as a var attempt
+  var count = $("#count").html();
+        for (count = var i = 0; i < 1000; i++){
+          $("#count").html(count);
+        }
+  */  
+
+/*
+    $(".button").on("click", function(event){
+      var i = 0;
+      var target = $(event.target);
+      for (i = 0; i < target; i++){
+        $("#count").html(++i);
+      }
+      });
+*/
+
+/*
+var i = 0;
+        var x = (guess/guess) / ;
+
+        for (var i = 0; i < (guess / guess) + 1; i++){
+        $("#count").html(i);
+        }
+
+*/
+
+  
