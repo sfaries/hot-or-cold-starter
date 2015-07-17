@@ -2,6 +2,7 @@
 $(document).ready(function(){
 
   var gameNum = undefined;
+  var newGuesses = 0;
 
 
 	/*--- Display information modal box ---*/
@@ -53,12 +54,13 @@ $(document).ready(function(){
        var $guess = $("#userGuess").val();
        var guess = $guess;
         $("#userGuess").val('');
+        newGuesses++;
        
         Number(guess);
         //console.log(guess);
         //console.log(gameNum);
 
-          //$("#count")add guess to guess counter
+         $("#count").html(newGuesses);
          $("ul.guessBox").append('<li class = "guessBox">' + guess + '</li>');
 
 
