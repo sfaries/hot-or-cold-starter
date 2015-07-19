@@ -28,8 +28,8 @@ $(document).ready(function(){
   /*--- New Game Function ---*/
 
   	function newGame(){
+      newGuesses = 0;
       $("#count").html("0");
-  		//$("#count").show();?reset guess counter (2 options: replace value; save a var newGuesses with a count ++)
       $("#feedback").html("Make your Guess!");
   		$("#guessList").empty();
   		gameNum = ranNumber();
@@ -100,6 +100,7 @@ $(document).ready(function(){
 
         }
     };
+newGame();    
 });
 
 /*
